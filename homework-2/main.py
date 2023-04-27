@@ -1,7 +1,8 @@
 from src.channel import Channel
 
 if __name__ == '__main__':
-    vdud = Channel('UCMCgOm8GZkHp8zJ6l7_hIuA')
+    # vdud = Channel('UCMCgOm8GZkHp8zJ6l7_hIuA')
+    vdud = Channel.get_service('UCMCgOm8GZkHp8zJ6l7_hIuA')
 
     # получаем значения атрибутов
     print(vdud.title)  # вДудь
@@ -9,11 +10,11 @@ if __name__ == '__main__':
     print(vdud.url)  # https://www.youtube.com/channel/UCMCgOm8GZkHp8zJ6l7_hIuA
 
     # менять не можем
-    vdud.channel_id = 'Новое название'
+    # vdud.channel_id = 'Новое название'
     # AttributeError: property 'channel_id' of 'Channel' object has no setter
 
     # можем получить объект для работы с API вне класса
-    print(Channel.get_service())
+    print(Channel.get_service('UCMCgOm8GZkHp8zJ6l7_hIuA'))
     # <googleapiclient.discovery.Resource object at 0x000002B1E54F9750>
 
     # создаем файл 'vdud.json' в данными по каналу
