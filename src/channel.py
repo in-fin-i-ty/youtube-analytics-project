@@ -23,6 +23,14 @@ class Channel:
         self.video_count = self.channel.get('items')[0].get('statistics').get('videoCount')
         self.viewCount = self.channel.get('items')[0].get('statistics').get('viewCount')
 
+    @property
+    def channel_id(self):
+        return self.__channel_id
+
+    @channel_id.setter
+    def channel_id(self, channel_id):
+        raise AttributeError("property 'channel_id' of 'Channel' object has no setter")
+
     @classmethod
     def get_service(cls, channel_id):
         """
