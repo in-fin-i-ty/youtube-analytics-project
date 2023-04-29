@@ -24,27 +24,59 @@ class Channel:
         self.viewCount = self.channel.get('items')[0].get('statistics').get('viewCount')
 
     def __str__(self):
+        """
+        Выводит для пользователя название канал и URL
+        return: Название канала (URL)
+        """
         return f"{self.title} ({self.url})"
 
     def __add__(self, other):
+        """
+        Метод суммирующий количество подписчиков 2х каналов
+        return: True or False
+        """
         return self.subscriberCount + other.subscriberCount
 
     def __sub__(self, other):
+        """
+         Метод вычитающий количество подписчиков 2х каналов
+         return: True or False
+        """
         return self.subscriberCount - other.subscriberCount
 
     def __gt__(self, other):
+        """
+        Метод сравнивающий "больше" количество подписчиков 2х каналов
+        return: True or False
+        """
         return self.subscriberCount > other.subscriberCount
 
     def __ge__(self, other):
+        """
+        Метод сравнивающий "больше или равно" количество подписчиков 2х каналов
+        return: True or False
+        """
         return self.subscriberCount >= other.subscriberCount
 
     def __lt__(self, other):
+        """
+        Метод сравнивающий "меньше" количество подписчиков 2х каналов
+        return: True or False
+        """
         return self.subscriberCount < other.subscriberCount
 
     def __le__(self, other):
+        """
+        Метод сравнивающий "меньше или равно" количество подписчиков 2х каналов
+        return: True or False
+        """
         return self.subscriberCount <= other.subscriberCount
 
     def __eq__(self, other):
+        """
+        Метод сравнивающий количество подписчиков 2х каналов
+        return: True or False
+        """
         return self.subscriberCount == other.subscriberCount
 
     @property
@@ -53,6 +85,9 @@ class Channel:
 
     @channel_id.setter
     def channel_id(self, channel_id):
+        """
+        Сеттер возвращающий ошибку при попытке изменить название канала
+        """
         raise AttributeError("property 'channel_id' of 'Channel' object has no setter")
 
     @classmethod
