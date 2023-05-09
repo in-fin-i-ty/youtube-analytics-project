@@ -4,6 +4,7 @@ from googleapiclient.discovery import build
 
 
 class Channel:
+    __api_key: str = os.getenv('API_KEY')
     """
     Класс для ютуб-канала
     """
@@ -13,9 +14,8 @@ class Channel:
         Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API
         """
         self.__channel_id = channel_id
-        api_key: str = os.getenv('API_KEY')
-        self.youtube = build('youtube', 'v3', developerKey=api_key)
-        self.channel = self.youtube.channels().list(id=self.__channel_id, part='snippet,statistics').execute()
+        youtube = Channel.get_service()
+        self.channel = youtube.channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         self.title = self.channel.get('items')[0].get('snippet').get('title')
         self.description = self.channel.get('items')[0].get('snippet').get('description')
         self.url = f'https://www.youtube.com/channel/{self.__channel_id}'
@@ -53,7 +53,7 @@ class Channel:
 
     def __ge__(self, other):
         """
-        Метод сравнивающий "больше или равно" количество подписчиков 2х каналов
+        Метод сравнивающий "больше или равно" количество подписчиков 2-х каналов
         return: True or False
         """
         return self.subscriberCount >= other.subscriberCount
@@ -67,7 +67,7 @@ class Channel:
 
     def __le__(self, other):
         """
-        Метод сравнивающий "меньше или равно" количество подписчиков 2х каналов
+        Метод сравнивающий "меньше или равно" количество подписчиков 2-х каналов
         return: True or False
         """
         return self.subscriberCount <= other.subscriberCount
@@ -91,17 +91,18 @@ class Channel:
         raise AttributeError("property 'channel_id' of 'Channel' object has no setter")
 
     @classmethod
-    def get_service(cls, channel_id):
+    def get_service(cls):
         """
         Класс-метод возвращающий объект для работы YouTube API
         """
-        return cls(channel_id=channel_id)
+        youtube = build('youtube', 'v3', developerKey=Channel.__api_key)
+        return youtube
 
     def print_info(self) -> None:
         """
         Выводит в консоль информацию о канале
         """
-        channel = self.youtube.channels().list(id=self.__channel_id, part="snippet,statistics").execute()
+        channel = self.channel.channels().list(id=self.__channel_id, part="snippet,statistics").execute()
         print(json.dumps(channel, indent=2, ensure_ascii=False))
 
     def to_json(self, files):
